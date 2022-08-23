@@ -1,0 +1,118 @@
+@use "../../styles/variables/mixins" as *;
+
+.workCard {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #272728;
+  &:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  @media only screen and (min-width: $celularGrandeLandscape) {
+    display: grid;
+    grid-template-columns: 15ch 1fr;
+    grid-gap: 0 70px;
+  }
+
+  // Titulo
+  h3 {
+    color: white;
+    font-weight: 400;
+    @include textXl;
+    margin-bottom: 5px;
+  }
+  // Fecha
+  .fecha {
+    display: block;
+    @include textLg;
+    margin-bottom: 15px;
+  }
+  // Descripcion
+  p {
+    font-weight: 300;
+    @include textMd;
+    margin-bottom: 20px;
+  }
+  // portada
+  .portada {
+    display: block;
+    // max-width: 500px;
+    div {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: 56.8%;
+      background-color: #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      span {
+        border-radius: 8px;
+      }
+    }
+  }
+  // tecnologias
+  .tecnologias {
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    @include textMd;
+    svg {
+      display: none;
+      margin-right: 10px;
+      @media only screen and (min-width: $celularGrandeLandscape) {
+        display: block;
+      }
+    }
+  }
+  // Links
+  .links {
+    margin-top: 20px;
+    svg {
+      margin-right: 20px;
+    }
+
+    @media only screen and (min-width: $celularGrandeLandscape) {
+      display: none;
+    }
+  }
+
+  // Columna izquierda escritorio
+  .colIzquierda {
+    display: none;
+    @media only screen and (min-width: $celularGrandeLandscape) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fecha {
+      margin-bottom: 0;
+    }
+    a {
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      margin-top: 10px;
+      svg {
+        margin-left: 6px;
+      }
+
+      &:hover{
+        color: white;
+        svg path{
+          fill: white;
+        }
+      }
+    }
+  }
+  // Columna derecha escritorio
+  .colDerecha {
+    @media only screen and (min-width: $celularGrandeLandscape) {
+      .fecha {
+        display: none;
+      }
+    }
+  }
+}

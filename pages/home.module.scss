@@ -1,0 +1,213 @@
+@use "../styles/variables/colors" as *;
+@use "../styles/variables/mixins" as *;
+
+// Show text animation
+
+$showTextAnimationDuration: 450ms;
+
+@keyframes showTextAnimation {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@mixin showText($delay) {
+  &::after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(270, 4%, 20%);
+
+    transform-origin: right;
+    transform: scaleX(1);
+
+    animation: showTextAnimation $showTextAnimationDuration $delay forwards;
+  }
+}
+
+// Fade in animation
+@keyframes fadeInAnimation {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+$fadeInAnimationDuration: 400ms;
+
+.content {
+  position: relative;
+  overflow: hidden;
+
+  // SVG fondo
+  .bgSvg {
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+    right: 0;
+    width: 110vw;
+    max-width: 1200px;
+    height: auto;
+    opacity: 0.9;
+    transform: translateX(40%);
+
+    @media only screen and (min-width: $celularChicoLandscape) {
+      opacity: 0.6;
+    }
+    @media only screen and (min-width: $celularGrandeLandscape) {
+      opacity: 0.4;
+    }
+    @media only screen and (min-width: $tablet) {
+      opacity: 0.3;
+    }
+  }
+  // SVG fondo abajo
+  .bottomBgSvg {
+    z-index: 0;
+    top: inherit;
+    right: inherit;
+    bottom: 200px;
+    left: 0;
+    transform: translateX(-30%) rotate(180deg);
+  }
+
+  .home {
+    position: relative;
+    z-index: 1;
+    max-width: $contentMaxWidth;
+    margin: 0 auto;
+    padding: 0 25px;
+
+    // Anchor home
+    .homeAnchor {
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+    }
+    // Hero section
+    .hero {
+      padding-top: 40px;
+      @media only screen and (min-width: $tablet) {
+        padding-top: 80px;
+      }
+      // Subheading
+      .subHeading {
+        position: relative;
+        display: block;
+        width: fit-content;
+        font-weight: 500;
+        @include textMd;
+        margin-bottom: 10px;
+
+        @include showText(1300ms);
+      }
+      // Title
+      h1 {
+        position: relative;
+        font-weight: 600;
+        font-size: 1.8rem;
+        @media only screen and (min-width: $celularGrande) {
+          font-size: clamp(1.875rem, 4.5vw + 1rem, 5rem);
+        }
+        @media only screen and (min-width: $celularChicoLandscape) {
+          font-size: clamp(1.875rem, 5.5vw + 1rem, 5rem);
+        }
+        @media only screen and (min-width: $tablet) {
+          font-size: 5rem;
+          line-height: 4.5rem;
+          padding-bottom: 15px;
+        }
+        margin-bottom: 20px;
+        background: $gradientHeader;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @include showText(1100ms);
+
+        span {
+          display: inline-flex;
+          flex-direction: column;
+          width: fit-content;
+          align-items: center;
+          svg {
+            width: 80%;
+            height: auto;
+          }
+        }
+      }
+
+      // About me
+      p {
+        position: relative;
+        margin-bottom: 30px;
+        font-weight: 300;
+        @include textMd;
+
+        @media only screen and (min-width: $celularGrandeLandscape) {
+          @include textXl;
+        }
+
+        b {
+          font-weight: 500;
+          color: white;
+        }
+        @include showText(900ms);
+      }
+      // My work
+      a {
+        @include textLg;
+        color: white;
+        position: relative;
+        background-color: $clrAzul;
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        padding: 10px 32px;
+        border-radius: 3px;
+        font-weight: 600;
+        opacity: 0;
+        svg {
+          margin-left: 12px;
+        }
+
+        transition: transform 150ms ease-out;
+
+        &::before {
+          display: block;
+          position: absolute;
+          content: "";
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          border: 1px solid $clrAzul;
+          box-sizing: border-box;
+          border-radius: 3px;
+
+          transform: translate(-10px, 10px);
+          transition: transform 150ms ease-out;
+          pointer-events: none;
+        }
+
+        &:hover, &:focus {
+          transform: scale(1.03);
+          &::before {
+            transform: translate(0);
+          }
+        }
+
+        animation: fadeInAnimation $fadeInAnimationDuration 1500ms forwards;
+      }
+    }
+  }
+}

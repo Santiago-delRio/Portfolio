@@ -1,0 +1,173 @@
+@use "../../styles/variables/colors" as *;
+@use "../../styles/variables/mixins" as *;
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar {
+  position: relative;
+  z-index: 2;
+
+  // animacion slide in
+  transform: translateY(-100%);
+  opacity: 0;
+  animation: slideIn 450ms 1500ms forwards
+    cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  nav {
+    max-width: $contentMaxWidth;
+    margin: 0 auto;
+    padding: 15px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    // Logo
+    .logo {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-weight: 600;
+      @include textXl;
+      @media only screen and (min-width: $celularGrandeLandscape) {
+        @include text1xl;
+      }
+    }
+    // Boton menu
+    .btnMenu {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 32px;
+      height: fit-content;
+
+      @media only screen and (min-width: $celularNormalLandscape) {
+        display: none;
+      }
+
+      span {
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        margin-bottom: 4px;
+
+        transform-origin: right;
+        transition: transform 0.3s;
+
+        // Barra del medio
+        &:nth-of-type(2) {
+          width: 50%;
+          transition: transform 0.3s, opacity 0.3s;
+        }
+        // Barra de abajo
+        &:last-of-type {
+          margin-bottom: 0;
+          transform: scaleX(0.6);
+        }
+      }
+    }
+    // Boton activo
+    .activeBtn {
+      // barra arriba
+      span:first-of-type {
+        transform: rotate(-45deg) translate(1px, -3px) scaleY(0.8);
+      }
+      // Barra medio
+      span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      // Barra abajo
+      span:last-of-type {
+        transform: rotate(45deg) translate(3px, 6px) scaleX(1) scaleY(0.8);
+      }
+    }
+
+    // Menu celular
+    .linksCelular {
+      position: fixed;
+      list-style-type: none;
+      visibility: hidden;
+      @media only screen and (min-width: $celularNormalLandscape) {
+        display: none;
+      }
+
+      li {
+        opacity: 0;
+        font-weight: 600;
+        @include text3xl;
+        margin-bottom: 50px;
+      }
+    }
+    // Menu celular abierto
+    .menuAbierto {
+      background-color: #131215;
+      visibility: visible;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      padding: 80px 25px 0;
+
+      @for $i from 1 through 3 {
+        li:nth-of-type(#{$i}) {
+          transition: opacity 0.6s $i * 0.1s;
+          opacity: 1;
+        }
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(180deg, #1a171c 0%, #131215 100%);
+      }
+    }
+
+    // Links escritorio
+    .linksEscritorio {
+      display: none;
+      position: relative;
+
+      @media only screen and (min-width: $celularNormalLandscape) {
+        display: flex;
+        align-items: center;
+      }
+
+      list-style-type: none;
+
+      li {
+        margin-left: 40px;
+        font-weight: 400;
+        @include textMd;
+
+        &:not(:last-of-type) a:hover, &:not(:last-of-type) a:focus {
+          color: #92a3ff;
+        }
+
+        &:last-of-type a {
+          @include botones;
+          padding: 10px 20px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

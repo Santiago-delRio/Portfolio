@@ -1,0 +1,116 @@
+@use "../../styles/variables/mixins" as *;
+@use "../../styles/variables/colors" as *;
+
+// Fade in animation
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+$fadeInAnimationDuration: 400ms;
+
+.contact {
+  @include sectionHeader;
+  padding-top: 60px;
+  margin-top: 60px;
+  @media only screen and (min-width: $celularGrandeLandscape) {
+    padding-top: 80px;
+    margin-top: 80px;
+  }
+
+  // formulario
+  .formularioContacto {
+    // campos
+    .field {
+      position: relative;
+      margin-top: 30px;
+
+      label {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        background-color: $negroFondo;
+        padding: 0 10px;
+        @include textMd;
+
+        transform: translateY(-50%);
+      }
+      input,
+      textarea {
+        background-color: $negroFondo;
+        border: 1px solid #797385;
+        border-radius: 5px;
+        width: 100%;
+        padding: 18px;
+        color: $clrTexto;
+        font-size: 0.85rem;
+
+        &:-webkit-autofill {
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: $clrTexto;
+        }
+
+        &:focus {
+          color: white;
+          & + label {
+            color: white;
+          }
+        }
+      }
+      textarea {
+        font-family: inherit;
+        resize: none;
+        height: 125px;
+      }
+    }
+    // Campo con error
+    .error {
+      label {
+        color: #ff8585;
+      }
+      input,
+      textarea {
+        border-color: #ff8585;
+        color: #ff8585;
+      }
+    }
+    // Mensaje de error
+    .errorMessage {
+      display: block;
+      font-weight: 400;
+      color: #ff8585;
+      margin-top: 5px;
+    }
+    // Boton enviar
+    .btnEnviar {
+      @include botones;
+      @include textMd;
+      margin-top: 40px;
+
+      svg {
+        margin-left: 12px;
+
+        path {
+          transition: fill 150ms;
+        }
+      }
+    }
+    // Enviando mail
+    .enviandoMail{
+      background-color: hsl(270, 4%, 20%);
+    }
+
+    // Captcha
+    .captcha {
+      visibility: hidden;
+    }
+  }
+
+  // Fade in animation
+  opacity: 0;
+  animation: fadeInAnimation $fadeInAnimationDuration 1500ms forwards;
+}

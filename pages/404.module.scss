@@ -1,0 +1,26 @@
+@use "../styles/variables/mixins" as *;
+
+.notFound {
+  h1,
+  h3,
+  a {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+  }
+
+  h1{
+    margin-top: 80px;
+    font-weight: 600;
+    font-size: 8rem;
+  }
+  h3{
+    @include text2xl;
+    font-weight: 500;
+  }
+  .homeBtn{
+    @include botones;
+    margin: 60px auto 0;
+  }
+}

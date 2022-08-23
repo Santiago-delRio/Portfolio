@@ -1,0 +1,71 @@
+@use "../../styles/variables/colors" as *;
+@use "../../styles/variables/mixins" as *;
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer {
+  background: linear-gradient(0deg, #211f23 0%, #1e1d20 100%);
+
+  // animacion slide in
+  transform: translateY(100%);
+  opacity: 0;
+  animation: slideIn 450ms 1500ms forwards
+    cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  nav {
+    max-width: $contentMaxWidth;
+    margin: 0 auto;
+    padding: 40px 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (min-width: $celularGrande) {
+      flex-direction: row;
+    }
+
+    // Logo
+    .logo {
+      color: white;
+      font-weight: 600;
+      @include textXl;
+      margin-bottom: 30px;
+      @media only screen and (min-width: $celularGrande) {
+        margin-bottom: 0;
+      }
+    }
+    // Links
+    ul {
+      list-style-type: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      li {
+        &:not(:first-of-type) {
+          margin-left: 30px;
+        }
+
+        a {
+          display: block;
+          transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          &:hover,
+          &:focus {
+            transform: translateY(-3px);
+          }
+        }
+      }
+    }
+  }
+}
